@@ -1,0 +1,28 @@
+{
+  "name": "hotelmate",
+  "private": true,
+  "version": "1.0.0",
+  "description": "B2B SaaS platform enabling seamless collaboration between Hotels and Tour Operators / DMCs",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "hotel",
+    "b2b",
+    "saas",
+    "tour-operator",
+    "dmc",
+    "booking"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "flowbite": "^4.0.1"
+  },
+  "devDependencies": {
+    "vite": "^7.2.4"
+  }
+}
