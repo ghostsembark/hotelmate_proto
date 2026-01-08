@@ -16,13 +16,13 @@ export function renderStep4(formData = {}) {
 
 
 
-      <div class="amenities-grid flex flex-wrap gap-x-3 gap-y-4" data-node-id="29:1831">
+      <div class="amenities-grid legacy-flex flex-wrap gap-x-3 gap-y-4" data-node-id="29:1831">
         ${AMENITIES.map((amenity, index) => {
           const isSelected = selectedAmenities.includes(amenity);
           return `
             <button 
               type="button" 
-              class="amenity-pill px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 border ${
+              class="amenity-pill legacy-px-4 legacy-py-2 legacy-rounded-lg text-sm font-medium transition-all duration-200 legacy-flex legacy-items-center legacy-gap-2 legacy-border ${
                 isSelected 
                 ? 'text-white border-transparent shadow-sm' 
                 : 'bg-white text-gray-600 border-gray-200 hover:border-brand-medium hover:bg-gray-50'
@@ -41,7 +41,7 @@ export function renderStep4(formData = {}) {
       </div>
 
       <!-- Flowbite Alert - Moved below the grid to match Figma -->
-      <div id="alert-amenities" class="flex items-center p-4 mt-8 text-cyan-800 rounded-lg bg-cyan-50 border border-cyan-100" role="alert" data-node-id="29:1954">
+      <div id="alert-amenities" class="legacy-flex legacy-items-center legacy-p-4 legacy-mt-8 text-cyan-800 legacy-rounded-lg bg-cyan-50 legacy-border border-cyan-100" role="alert" data-node-id="29:1954">
         <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
           <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
         </svg>

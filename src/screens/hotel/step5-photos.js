@@ -22,15 +22,15 @@ export function renderStep5(data = {}, rooms = []) {
       ${rooms.map(room => `<input type="file" id="room-file-input-${room.id}" accept="image/*" multiple style="display: none;" data-room-id="${room.id}">`).join('')}
 
       <!-- Property Photos Section -->
-      <div class="mb-10" data-node-id="29:2169">
-        <div class="flex flex-col gap-6 mb-6">
-          <div class="flex flex-col gap-1.5">
+      <div class="legacy-mb-10" data-node-id="29:2169">
+        <div class="legacy-flex legacy-flex-col legacy-gap-6 legacy-mb-6">
+          <div class="legacy-flex legacy-flex-col gap-1.5">
             <h3 class="text-base font-semibold text-heading">Property Photos</h3>
             <p class="text-sm font-normal text-body">Showcase your property with high-quality photos to attract bookings</p>
           </div>
           
           ${propertyPhotos.length === 0 ? `
-            <button id="upload-property-photo" class="btn btn-secondary w-fit flex items-center gap-1.5">
+            <button id="upload-property-photo" class="btn btn-secondary w-fit legacy-flex legacy-items-center gap-1.5">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
               </svg>
@@ -39,12 +39,12 @@ export function renderStep5(data = {}, rooms = []) {
           ` : ''}
         </div>
         
-        <div id="property-photo-grid" class="grid grid-cols-4 gap-6 mb-6">
+        <div id="property-photo-grid" class="legacy-grid grid-cols-4 legacy-gap-6 legacy-mb-6">
           ${propertyPhotos.map((photo, idx) => renderPhotoCard(photo, idx, 'property', PROPERTY_TAGS)).join('')}
         </div>
         
         ${propertyPhotos.length > 0 ? `
-          <button id="upload-property-photo" class="btn btn-secondary w-fit flex items-center gap-1.5">
+          <button id="upload-property-photo" class="btn btn-secondary w-fit legacy-flex legacy-items-center gap-1.5">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
             </svg>
@@ -55,8 +55,8 @@ export function renderStep5(data = {}, rooms = []) {
 
       <!-- Room Photos Section -->
       <div data-node-id="29:2442">
-        <div class="flex flex-col gap-6 mb-10">
-          <div class="flex flex-col gap-1.5">
+        <div class="legacy-flex legacy-flex-col legacy-gap-6 legacy-mb-10">
+          <div class="legacy-flex legacy-flex-col gap-1.5">
             <h3 class="text-base font-semibold text-heading">Room Photos</h3>
             <p class="text-sm font-normal text-body">Upload photos of your rooms to give guests a clear idea of what to expect</p>
           </div>
@@ -64,11 +64,11 @@ export function renderStep5(data = {}, rooms = []) {
           ${rooms.length > 0 ? rooms.map(room => {
             const photos = roomPhotos[room.id] || [];
             return `
-              <div class="room-photo-subsection flex flex-col gap-6" data-room-id="${room.id}">
+              <div class="room-photo-subsection legacy-flex legacy-flex-col legacy-gap-6" data-room-id="${room.id}">
                 <h4 class="text-base font-semibold text-heading">Room Type ${room.id || room.name || room.type}</h4>
                 
                 ${photos.length === 0 ? `
-                  <button class="btn btn-secondary w-fit upload-room-photo flex items-center gap-1.5" data-room-id="${room.id}">
+                  <button class="btn btn-secondary w-fit upload-room-photo legacy-flex legacy-items-center gap-1.5" data-room-id="${room.id}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                     </svg>
@@ -77,10 +77,10 @@ export function renderStep5(data = {}, rooms = []) {
                 ` : ''}
                 
                 ${photos.length > 0 ? `
-                  <div class="grid grid-cols-4 gap-6 mb-6" id="grid-${room.id}">
+                  <div class="legacy-grid grid-cols-4 legacy-gap-6 legacy-mb-6" id="grid-${room.id}">
                     ${photos.map((photo, idx) => renderPhotoCard(photo, idx, room.id, ROOM_TAGS)).join('')}
                   </div>
-                  <button class="btn btn-secondary w-fit upload-room-photo flex items-center gap-1.5" data-room-id="${room.id}">
+                  <button class="btn btn-secondary w-fit upload-room-photo legacy-flex legacy-items-center gap-1.5" data-room-id="${room.id}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                     </svg>
@@ -92,7 +92,7 @@ export function renderStep5(data = {}, rooms = []) {
           }).join('') : ''}
 
           <!-- Flowbite Alert - Moved to bottom of Room Photos -->
-          <div id="alert-photos" class="flex items-center p-4 text-cyan-800 rounded-lg bg-cyan-50 border border-cyan-100" role="alert" data-node-id="29:2452">
+          <div id="alert-photos" class="legacy-flex legacy-items-center legacy-p-4 text-cyan-800 legacy-rounded-lg bg-cyan-50 legacy-border border-cyan-100" role="alert" data-node-id="29:2452">
             <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"></path>
             </svg>
@@ -108,22 +108,22 @@ export function renderStep5(data = {}, rooms = []) {
 
 function renderPhotoCard(photo, index, type, tags) {
     return `
-    <div class="photo-card relative group bg-white rounded-lg overflow-hidden border border-gray-200 shadow-sm transition-all hover:shadow-md">
-       <div class="aspect-video relative overflow-hidden bg-gray-100">
-         <img src="${photo.url}" class="w-full h-full object-cover" alt="Uploaded photo">
-         <button class="remove-photo absolute top-2 right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-gray-50" 
+    <div class="photo-card legacy-relative group legacy-bg-white legacy-rounded-lg legacy-overflow-hidden legacy-border border-gray-200 legacy-shadow-sm transition-all hover:shadow-md">
+       <div class="aspect-video legacy-relative legacy-overflow-hidden bg-gray-100">
+         <img src="${photo.url}" class="legacy-w-full legacy-h-full object-cover" alt="Uploaded photo">
+         <button class="remove-photo legacy-absolute top-2 right-2 w-6 h-6 legacy-bg-white legacy-rounded-full legacy-flex legacy-items-center legacy-justify-center text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity legacy-shadow-sm hover:bg-gray-50" 
                  data-type="${type}" data-index="${index}">
             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
          </button>
        </div>
        <div class="p-3">
-         <div class="relative">
-           <select class="tag-select w-full bg-white border border-gray-200 text-sm rounded-lg focus:ring-brand focus:border-brand p-2 pr-8 appearance-none cursor-pointer ${!photo.tag ? 'text-brand' : 'text-gray-700'}" 
+         <div class="legacy-relative">
+           <select class="tag-select legacy-w-full legacy-bg-white legacy-border border-gray-200 text-sm legacy-rounded-lg focus:ring-brand focus:border-brand p-2 pr-8 appearance-none cursor-pointer ${!photo.tag ? 'text-brand' : 'text-gray-700'}" 
                    data-type="${type}" data-index="${index}">
              <option value="" ${!photo.tag ? 'selected' : ''}>Select Tag</option>
              ${tags.map(tag => `<option value="${tag}" ${photo.tag === tag ? 'selected' : ''}>${tag}</option>`).join('')}
            </select>
-           <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-400">
+           <div class="legacy-absolute inset-y-0 legacy-right-0 legacy-flex legacy-items-center px-2 pointer-events-none text-gray-400">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
            </div>
          </div>

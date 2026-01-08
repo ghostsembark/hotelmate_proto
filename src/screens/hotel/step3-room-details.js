@@ -40,16 +40,16 @@ export function renderStep3(data) {
   const sideSheetFormHtml = renderSideSheetForm();
 
   return `
-    <div class="step-header mb-6">
-      <h2 class="heading-2xl mb-2">Room Details</h2>
+    <div class="step-header legacy-mb-6">
+      <h2 class="heading-2xl legacy-mb-2">Room Details</h2>
       <p class="body-base text-body-subtle">Add all the room types available at your property.</p>
     </div>
 
-    <div id="room-list" class="flex flex-col gap-4 mb-6">
+    <div id="room-list" class="legacy-flex legacy-flex-col legacy-gap-4 legacy-mb-6">
       ${roomsHtml}
     </div>
 
-    <button id="add-room-btn" class="w-full py-4 border border-dashed rounded-lg text-body-subtle font-medium transition flex items-center justify-center gap-2" style="border-color: var(--border-default); background: transparent; cursor: pointer;">
+    <button id="add-room-btn" class="legacy-w-full legacy-py-4 legacy-border border-dashed legacy-rounded-lg text-body-subtle font-medium legacy-transition legacy-flex legacy-items-center legacy-justify-center legacy-gap-2" style="border-color: var(--border-default); background: transparent; cursor: pointer;">
       <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
       Add Another Room Type
     </button>
@@ -70,20 +70,20 @@ export function renderStep3(data) {
 function renderRoomCard(room, index) {
   return `
     <div class="room-card" data-id="${room.id}">
-      <div class="flex justify-between items-start mb-4">
+      <div class="legacy-flex legacy-justify-between items-start legacy-mb-4">
         <h3 class="heading-lg">Room Type ${index + 1}</h3>
         ${index > 0 ? `<button class="delete-room-btn" data-id="${room.id}" style="color: var(--text-fg-danger); background: none; border: none; cursor: pointer; padding: 4px;">
           <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
         </button>` : ''}
       </div>
 
-      <div class="mb-4">
+      <div class="legacy-mb-4">
         <label class="form-label">Room Name</label>
         <input type="text" class="input room-name-input" 
           placeholder="e.g. Deluxe King" value="${room.name}" data-id="${room.id}">
       </div>
 
-      <div class="grid grid-cols-2 gap-4 mb-6 pb-6" style="border-bottom: 1px solid var(--border-default);">
+      <div class="legacy-grid legacy-grid-cols-2 legacy-gap-4 legacy-mb-6 pb-6" style="border-bottom: 1px solid var(--border-default);">
         <!-- Room Type -->
         <div>
           <label class="form-label">Room Type</label>
@@ -112,21 +112,21 @@ function renderRoomCard(room, index) {
         </div>
       </div>
 
-      <div class="flex flex-col gap-4 mb-6">
+      <div class="legacy-flex legacy-flex-col legacy-gap-4 legacy-mb-6">
         <!-- Number of Rooms -->
-        <div class="flex justify-between items-center">
+        <div class="legacy-flex legacy-justify-between legacy-items-center">
           <label class="form-label mb-0">Total number of rooms you have of this type</label>
           ${renderInputStepper({ id: `stepper-count-${room.id}`, value: room.count, min: 1, max: 500 })}
         </div>
         
         <!-- Max Occupancy -->
-        <div class="flex justify-between items-center">
+        <div class="legacy-flex legacy-justify-between legacy-items-center">
           <label class="form-label mb-0">Max Occupancy allowed in this room</label>
           ${renderInputStepper({ id: `stepper-occupancy-${room.id}`, value: room.occupancy, min: 1, max: 10 })}
         </div>
 
         <!-- Children Allowed -->
-        <div class="flex justify-between items-center">
+        <div class="legacy-flex legacy-justify-between legacy-items-center">
           <label class="form-label mb-0">Number of children allowed</label>
           ${renderInputStepper({ id: `stepper-children-${room.id}`, value: room.children, min: 0, max: 5 })}
         </div>
@@ -158,16 +158,16 @@ function renderRoomDetailsSummary(room) {
 
   return `
     <div class="room-details-summary">
-      <div class="flex justify-between items-center mb-4">
+      <div class="legacy-flex legacy-justify-between legacy-items-center legacy-mb-4">
         <span class="text-sm font-semibold text-gray-900">Additional Details</span>
-        <button class="edit-details-btn flex items-center gap-1 text-sm font-medium text-brand" data-id="${room.id}">
+        <button class="edit-details-btn legacy-flex legacy-items-center gap-1 text-sm font-medium text-brand" data-id="${room.id}">
           <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
           </svg>
           Edit Details
         </button>
       </div>
-      <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 bg-white p-4 rounded-lg border border-gray-100">
+      <div class="legacy-grid legacy-grid-cols-2 lg:grid-cols-5 legacy-gap-4 legacy-bg-white legacy-p-4 legacy-rounded-lg legacy-border border-gray-100">
         <div class="detail-item">
           <div class="text-xs text-body-subtle mb-1">Bed Type</div>
           <div class="text-sm font-bold text-gray-900 capitalize">${room.details.bedType}</div>
@@ -198,13 +198,13 @@ function renderRoomDetailsSummary(room) {
  */
 function renderSideSheetForm() {
   return `
-    <div class="flex flex-col gap-6">
+    <div class="legacy-flex legacy-flex-col legacy-gap-6">
       
       <!-- Bed Configuration -->
-    <div class="flex flex-col gap-6">
+    <div class="legacy-flex legacy-flex-col legacy-gap-6">
       
       <!-- Row 1: Bed Type -->
-      <div class="flex items-center justify-between w-full">
+      <div class="legacy-flex legacy-items-center legacy-justify-between legacy-w-full">
         <label class="form-label mb-0" style="width: auto;">Bed Type</label>
         <div class="select-wrapper" style="width: 182px;">
           <select id="sheet-bed-type" class="input form-select">
@@ -218,20 +218,20 @@ function renderSideSheetForm() {
       </div>
 
       <!-- Row 2: Number of Beds -->
-      <div class="flex items-center justify-between w-full">
+      <div class="legacy-flex legacy-items-center legacy-justify-between legacy-w-full">
         <label class="form-label mb-0" style="width: auto;">Number of beds</label>
          ${renderInputStepper({ id: 'sheet-bed-count', value: 1, min: 1, max: 5 })}
       </div>
 
       <!-- Row 3: Add Extra Beds (Radio) -->
-      <div class="flex items-center justify-between w-full">
+      <div class="legacy-flex legacy-items-center legacy-justify-between legacy-w-full">
         <label class="form-label mb-0" style="width: auto;">Can this room accommodate extra beds</label>
-        <div class="flex items-center gap-4" id="sheet-extra-bed-group">
-          <div class="flex items-center">
+        <div class="legacy-flex legacy-items-center legacy-gap-4" id="sheet-extra-bed-group">
+          <div class="legacy-flex legacy-items-center">
             <input id="sheet-extra-bed-yes" type="radio" value="yes" name="sheet-extra-bed" class="w-4 h-4 text-brand bg-gray-100 border-gray-300 focus:ring-brand focus:ring-2">
             <label for="sheet-extra-bed-yes" class="ms-4 text-sm font-medium text-gray-900">YES</label>
           </div>
-          <div class="flex items-center">
+          <div class="legacy-flex legacy-items-center">
             <input id="sheet-extra-bed-no" type="radio" value="no" name="sheet-extra-bed" class="w-4 h-4 text-brand bg-gray-100 border-gray-300 focus:ring-brand focus:ring-2" checked>
             <label for="sheet-extra-bed-no" class="ms-4 text-sm font-medium text-gray-900">NO</label>
           </div>
@@ -239,7 +239,7 @@ function renderSideSheetForm() {
       </div>
 
       <!-- Row 4: Max Extra Beds (Conditional) -->
-      <div id="extra-bed-options" class="flex items-center justify-between w-full hidden">
+      <div id="extra-bed-options" class="legacy-flex legacy-items-center legacy-justify-between legacy-w-full legacy-hidden">
         <label class="form-label mb-0" style="width: auto;">Max Extra Beds</label>
          ${renderInputStepper({ id: 'sheet-max-extra', value: 0, min: 0, max: 3 })}
       </div>
@@ -248,7 +248,7 @@ function renderSideSheetForm() {
       <div class="divider"></div>
 
       <!-- Row 5: Free Child Age -->
-      <div class="flex items-center justify-between w-full">
+      <div class="legacy-flex legacy-items-center legacy-justify-between legacy-w-full">
         <label class="form-label mb-0" style="width: auto;">Free Child Age limit</label>
         ${renderInputStepper({ id: 'sheet-free-child-age', value: 0, min: 0, max: 12 })}
       </div>
@@ -257,13 +257,13 @@ function renderSideSheetForm() {
       <div class="divider"></div>
 
       <!-- Row 6: Bathrooms -->
-      <div class="flex items-center justify-between w-full">
+      <div class="legacy-flex legacy-items-center legacy-justify-between legacy-w-full">
         <label class="form-label mb-0" style="width: auto;">Number of bathrooms</label>
         ${renderInputStepper({ id: 'sheet-bathroom-count', value: 1, min: 1, max: 4 })}
       </div>
 
       <!-- Row 7: Meal Type -->
-      <div class="flex items-center justify-between w-full">
+      <div class="legacy-flex legacy-items-center legacy-justify-between legacy-w-full">
         <label class="form-label mb-0" style="width: auto;">Meal Type</label>
         <div class="select-wrapper" style="width: 182px;">
           <select id="sheet-meal-type" class="input form-select">

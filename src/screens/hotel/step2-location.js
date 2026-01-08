@@ -43,15 +43,15 @@ export function renderStep2(formData = {}) {
         </div>
 
         <!-- Address Search -->
-        <div class="form-group mt-8
+        <div class="form-group legacy-mt-8
           <!-- Divider -->
         
 
           <p class="section-label">Property Address</p>
           
-          <div class="relative">
+          <div class="legacy-relative">
             <label for="addressSearch" class="form-label">Search</label>
-            <div class="relative">
+            <div class="legacy-relative">
               <input 
                 type="text" 
                 id="addressSearch" 
@@ -59,7 +59,7 @@ export function renderStep2(formData = {}) {
                 placeholder="Search for your property Location"
                 autocomplete="off"
               >
-              <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+              <div class="legacy-absolute inset-y-0 legacy-right-0 legacy-flex legacy-items-center pr-3 pointer-events-none">
                 <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
@@ -67,7 +67,7 @@ export function renderStep2(formData = {}) {
             </div>
             
             <!-- Flowbite Dropdown Sheet -->
-            <div id="addressDropdown" class="hidden dropdown-container">
+            <div id="addressDropdown" class="legacy-hidden dropdown-container">
               <ul class="py-0 m-0 list-none">
                 ${MOCK_LOCATIONS.map(loc => `
                   <li>
@@ -82,7 +82,7 @@ export function renderStep2(formData = {}) {
         </div>
 
         <!-- Detailed Address Fields (Hidden Initially) -->
-        <div id="detailedAddressFields" class="${formData.addressSelected ? '' : 'hidden'} flex flex-col gap-6 mt-4">
+        <div id="detailedAddressFields" class="${formData.addressSelected ? '' : 'hidden'} legacy-flex legacy-flex-col legacy-gap-6 legacy-mt-4">
           <p class="section-label">Fill full address so that traveller can reach out to you</p>
           
           <div class="form-group">

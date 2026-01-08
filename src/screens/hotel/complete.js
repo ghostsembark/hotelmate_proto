@@ -1,18 +1,18 @@
 export function renderCompleteScreen(user) {
     return `
-    <div class="min-h-screen bg-white relative overflow-hidden flex flex-col">
+    <div class="legacy-min-h-screen legacy-bg-white legacy-relative legacy-overflow-hidden legacy-flex legacy-flex-col">
         <!-- Header / Logo -->
         <div class="px-8 py-6">
              <span class="font-serif italic text-2xl text-brand font-bold tracking-tighter">hm</span>
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col items-center justify-center -mt-20 px-4 relative z-10 animate-fade-in">
-            <div class="max-w-[800px] w-full text-center flex flex-col items-center">
+        <div class="flex-1 legacy-flex legacy-flex-col legacy-items-center legacy-justify-center -mt-20 legacy-px-4 legacy-relative z-10 animate-fade-in">
+            <div class="max-w-[800px] legacy-w-full legacy-text-center legacy-flex legacy-flex-col legacy-items-center">
                 
                 <!-- Success Icon -->
-                <div class="mb-6 flex justify-center">
-                    <div class="rounded-full bg-white text-brand p-2">
+                <div class="legacy-mb-6 legacy-flex legacy-justify-center">
+                    <div class="legacy-rounded-full legacy-bg-white text-brand p-2">
                          <svg width="84" height="84" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="40" cy="40" r="38" stroke="#0E7490" stroke-width="4"/>
                             <path d="M24 40L36 52L56 28" stroke="#0E7490" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -21,7 +21,7 @@ export function renderCompleteScreen(user) {
                 </div>
 
                 <!-- Text Group -->
-                <div class="flex flex-col items-center gap-3 w-full mb-10">
+                <div class="legacy-flex legacy-flex-col legacy-items-center legacy-gap-3 legacy-w-full legacy-mb-10">
                     <h1 class="text-lg font-semibold text-heading">
                         Your hotel is live on HotelMate <span class="align-middle">🎉</span>
                     </h1>
@@ -33,23 +33,23 @@ export function renderCompleteScreen(user) {
                 </div>
 
                 <!-- Divider -->
-                <div class="border-t border-gray-200 w-full mb-10"></div>
+                <div class="border-t border-gray-200 legacy-w-full legacy-mb-10"></div>
 
                 <!-- Next Steps Section -->
-                <div class="w-full max-w-lg">
+                <div class="legacy-w-full max-w-lg">
                     <p class="text-xs font-semibold text-body-subtle mb-3">Next Step</p>
-                    <p class="text-sm font-normal text-heading mb-8">
+                    <p class="text-sm font-normal text-heading legacy-mb-8">
                         To start receiving contracts, bookings, and payments, complete a<br>
                         few recommended steps below.
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button id="btn-business-ready" class="btn btn-business-ready px-8 py-3 rounded text-sm font-medium transition-colors flex items-center justify-center gap-2 group shadow-sm min-w-200">
+                    <div class="legacy-flex legacy-flex-col sm:flex-row legacy-gap-4 legacy-justify-center">
+                        <button id="btn-business-ready" class="btn btn-business-ready px-8 py-3 legacy-rounded text-sm font-medium transition-colors legacy-flex legacy-items-center legacy-justify-center legacy-gap-2 group legacy-shadow-sm legacy-min-w-200">
                             Get Business Ready
                             <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </button>
                         
-                        <button id="btn-dashboard" class="btn bg-white border border-gray-200 hover:bg-gray-50 text-gray-800 px-8 py-3 rounded text-sm font-medium transition-colors flex items-center justify-center gap-2 group shadow-sm min-w-200">
+                        <button id="btn-dashboard" class="btn legacy-bg-white legacy-border border-gray-200 hover:bg-gray-50 text-gray-800 px-8 py-3 legacy-rounded text-sm font-medium transition-colors legacy-flex legacy-items-center legacy-justify-center legacy-gap-2 group legacy-shadow-sm legacy-min-w-200">
                             To Dashboard
                             <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </button>
@@ -59,9 +59,9 @@ export function renderCompleteScreen(user) {
         </div>
 
         <!-- Decorative Background Illustration (Bottom Right) -->
-        <div class="absolute bottom-0 right-0 w-[400px] h-[300px] opacity-80 pointer-events-none hidden md:block">
+        <div class="legacy-absolute bottom-0 legacy-right-0 w-[400px] h-[300px] opacity-80 pointer-events-none legacy-hidden md:block">
             <!-- Placeholder for the travel illustration (Passport, Compass, Backpack) -->
-             <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-gray-100">
+             <svg viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg" class="legacy-w-full legacy-h-full text-gray-100">
                 <path d="M0 300C50 300 100 250 150 250C250 250 300 100 400 50V300H0Z" fill="#F3F4F6"/>
                 <!-- Simple outline sketches representing the illustration concept -->
                 <circle cx="280" cy="200" r="40" stroke="#CBD5E1" stroke-width="2" fill="white"/>
