@@ -2649,3 +2649,28 @@ body {
 }
 
 
+
+
+/* Added Utilities for Complete Screen */
+.mb-10 { margin-bottom: var(--spacing-10); }
+.mb-12 { margin-bottom: var(--spacing-12); }
+.mb-14 { margin-bottom: 56px; }
+
+.min-w-200 {
+  min-width: 200px;
+}
+
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Custom Button for Business Ready */
+.btn-business-ready {
+  background-color: #0E7490;
+  color: white;
+  border: 1px solid transparent;
+}
+.btn-business-ready:hover {
+  background-color: #155e75;
+  color: white;
+}

@@ -50,20 +50,24 @@ export const ROOM_TYPES = [
 
 export const AMENITIES = [
     'Swimming Pool',
-    'Spa & Wellness',
-    'Restaurant',
-    'Bar/Lounge',
+    'Car Park',
+    'Sauna',
+    'Spa',
+    'Wi-Fi (Free)',
+    'Airport Transfer',
     'Fitness Center',
-    'Business Center',
-    'Conference Rooms',
-    'Room Service',
-    'Concierge',
-    'Valet Parking',
-    'Airport Shuttle',
-    'Beach Access',
-    'Kids Club',
-    'Kids Club',
-    'Pet Friendly'
+    'Front Desk',
+    'Restaurant',
+    'Pet Allowed',
+    'Conference Room',
+    'Laundary',
+    'Lounge',
+    'Newspaper',
+    'First-aid Services',
+    'Doctor on Call',
+    'Security Guard',
+    'EV Charging Station',
+    'Concierge'
 ]
 
 export const ROOM_VIEWS = [

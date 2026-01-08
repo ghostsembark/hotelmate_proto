@@ -18,6 +18,11 @@ import { renderStepper } from './components/Stepper.js'
 import { renderStep1, setupStep1Handlers } from './screens/hotel/step1-basic-info.js'
 import { renderStep2, setupStep2Handlers } from './screens/hotel/step2-location.js'
 import { renderStep3, setupStep3Handlers } from './screens/hotel/step3-room-details.js'
+import { renderStep4, setupStep4Handlers } from './screens/hotel/step4-amenities.js'
+import { renderStep5, setupStep5Handlers } from './screens/hotel/step5-photos.js'
+import { renderStep6, setupStep6Handlers } from './screens/hotel/step6-policies.js'
+import { renderStep7, setupStep7Handlers } from './screens/hotel/step7-verification.js'
+import { renderCompleteScreen, setupCompleteHandlers } from './screens/hotel/complete.js'
 import { HOTEL_ONBOARDING_STEPS } from './mockData.js'
 
 // App container
@@ -42,6 +47,21 @@ router.register('/onboarding/hotel/welcome', () => {
   document.documentElement.setAttribute('data-theme', 'enterprise')
   app.innerHTML = renderHotelWelcome(user)
   setupHotelWelcomeHandlers(router)
+})
+
+// Register complete route BEFORE the dynamic :step route
+router.register('/onboarding/hotel/complete', () => {
+  const user = router.getUser()
+  if (!user) {
+    router.navigate('/login')
+    return
+  }
+  
+  // Ensure we are using the enterprise theme for this screen as per design
+  document.documentElement.setAttribute('data-theme', 'enterprise')
+  
+  app.innerHTML = renderCompleteScreen(user)
+  setupCompleteHandlers(router)
 })
 
 router.register('/onboarding/hotel/:step', (params, state) => {
@@ -73,6 +93,15 @@ router.register('/onboarding/hotel/:step', (params, state) => {
     stepContent = renderStep2(state.onboardingData.step2 || {});
   } else if (step === 3) {
     stepContent = renderStep3(state.onboardingData.step3 || {});
+  } else if (step === 4) {
+    stepContent = renderStep4(state.onboardingData.step4 || {});
+  } else if (step === 5) {
+    const rooms = state.onboardingData.step3?.rooms || [];
+    stepContent = renderStep5(state.onboardingData.step5 || {}, rooms);
+  } else if (step === 6) {
+    stepContent = renderStep6(state.onboardingData.step6 || {});
+  } else if (step === 7) {
+    stepContent = renderStep7(state.onboardingData.step7 || {});
   } else {
     // Placeholder for other steps
     stepContent = `
@@ -103,7 +132,7 @@ router.register('/onboarding/hotel/:step', (params, state) => {
         </aside>
 
         <main class="onboarding-content">
-          <div class="step-container">
+          <div class="step-container" id="onboarding-step-container">
             ${stepContent}
           </div>
         </main>
@@ -117,37 +146,15 @@ router.register('/onboarding/hotel/:step', (params, state) => {
   if (step === 1) setupStep1Handlers(router);
   if (step === 2) setupStep2Handlers(router);
   if (step === 3) setupStep3Handlers(router);
+  if (step === 4) setupStep4Handlers(router);
+  if (step === 5) setupStep5Handlers(router);
+  if (step === 6) setupStep6Handlers(router);
+  if (step === 7) setupStep7Handlers(router);
 })
 
-router.register('/onboarding/hotel/complete', () => {
-  const user = router.getUser()
-  if (!user) {
-    router.navigate('/login')
-    return
-  }
-  app.innerHTML = `
-    <div class="onboarding-page">
-      <div class="onboarding-container">
-        <div class="onboarding-logo">
-          <img src="/hotelmate_logo.svg" alt="HotelMate" class="logo-image">
-        </div>
-        <div class="complete-content">
-          <div class="success-icon">
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-              <circle cx="32" cy="32" r="32" fill="var(--bg-success-medium)"/>
-              <path d="M20 32L28 40L44 24" stroke="var(--bg-success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h1 class="welcome-title">Setup Complete!</h1>
-          <p class="welcome-subtitle">Your hotel profile is ready. You can now access your dashboard.</p>
-          <button class="btn-get-started" onclick="alert('Dashboard coming soon!')">
-            Go to Dashboard
-          </button>
-        </div>
-      </div>
-    </div>
-  `
-})
+
+
+
 
 router.register('/onboarding/operator/welcome', () => {
   const user = router.getUser()
