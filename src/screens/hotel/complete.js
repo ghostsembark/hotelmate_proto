@@ -1,3 +1,5 @@
+import { renderButton } from '../../components/flowbite/Button.js';
+
 export function renderCompleteScreen(user) {
     return `
     <div class="legacy-min-h-screen legacy-bg-white legacy-relative legacy-overflow-hidden legacy-flex legacy-flex-col">
@@ -44,15 +46,23 @@ export function renderCompleteScreen(user) {
                     </p>
                     
                     <div class="legacy-flex legacy-flex-col sm:flex-row legacy-gap-4 legacy-justify-center">
-                        <button id="btn-business-ready" class="btn btn-business-ready px-8 py-3 legacy-rounded text-sm font-medium transition-colors legacy-flex legacy-items-center legacy-justify-center legacy-gap-2 group legacy-shadow-sm legacy-min-w-200">
-                            Get Business Ready
-                            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </button>
+                        ${renderButton({
+                          id: 'btn-business-ready',
+                          label: 'Get Business Ready',
+                          color: 'brand',
+                          size: 'lg',
+                          rightIconSvg: true,
+                          extraClass: 'px-8 py-3 legacy-min-w-200'
+                        })}
                         
-                        <button id="btn-dashboard" class="btn legacy-bg-white legacy-border border-gray-200 hover:bg-gray-50 text-gray-800 px-8 py-3 legacy-rounded text-sm font-medium transition-colors legacy-flex legacy-items-center legacy-justify-center legacy-gap-2 group legacy-shadow-sm legacy-min-w-200">
-                            To Dashboard
-                            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                        </button>
+                        ${renderButton({
+                          id: 'btn-dashboard',
+                          label: 'To Dashboard',
+                          color: 'secondary',
+                          size: 'lg',
+                          rightIconSvg: true,
+                          extraClass: 'px-8 py-3 legacy-min-w-200'
+                        })}
                     </div>
                 </div>
             </div>
@@ -77,7 +87,7 @@ export function renderCompleteScreen(user) {
 
 export function setupCompleteHandlers(router) {
     document.getElementById('btn-dashboard')?.addEventListener('click', () => {
-        alert('Navigating to Dashboard (Not implemented in prototype)');
+        router.navigate('/hotel/dashboard');
     });
     
     document.getElementById('btn-business-ready')?.addEventListener('click', () => {

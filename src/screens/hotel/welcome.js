@@ -1,8 +1,4 @@
-/**
- * HotelMate - Hotel Welcome Screen
- * Based on Figma design node 239-9102
- * Enterprise theme (Cyan)
- */
+import { renderButton } from '../../components/flowbite/Button.js'
 
 export function renderHotelWelcome(user) {
   return `
@@ -98,9 +94,15 @@ export function renderHotelWelcome(user) {
         </p>
 
         <!-- CTA Button -->
-        <button type="button" class="welcome-cta-btn" id="getStartedBtn" data-node-id="239:40931">
-          Get Started
-        </button>
+        <div class="welcome-cta-container">
+          ${renderButton({
+            id: 'getStartedBtn',
+            label: 'Get Started',
+            color: 'brand',
+            size: 'xl',
+            extraClass: 'welcome-cta-btn'
+          })}
+        </div>
       </main>
     </div>
   `

@@ -71,6 +71,9 @@ export function renderLoginScreen(onLogin) {
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </button>
+            <div style="margin-top: 10px; font-size: 12px; opacity: 0.7;">
+                <a href="#" id="dev-dashboard-link" style="text-decoration: underline; color: inherit;">Dev: Jump to Dashboard</a>
+            </div>
           </div>
 
           <!-- Demo Credentials Hint -->
@@ -250,6 +253,19 @@ export function setupLoginHandlers(authService, router) {
                 validateField('password')
             }
         })
+    }
+
+    // Dev Link Handler
+    const devLink = document.getElementById('dev-dashboard-link');
+    if (devLink) {
+        devLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Simulate login as hotel user
+            const hotelUser = { type: 'hotel', email: 'hotel@demo.com', name: 'Demo Hotel' };
+            router.setUser(hotelUser);
+            document.documentElement.setAttribute('data-theme', 'enterprise');
+            router.navigate('/hotel/dashboard');
+        });
     }
 
     const loginForm = document.getElementById('loginForm')

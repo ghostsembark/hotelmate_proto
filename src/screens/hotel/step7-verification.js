@@ -1,4 +1,5 @@
-
+import { renderInput } from '../../components/flowbite/Input.js';
+import { renderButton } from '../../components/flowbite/Button.js';
 
 export function renderStep7(data) {
     const noGst = data.noGst || false;
@@ -24,8 +25,13 @@ export function renderStep7(data) {
                 <div id="gst-section" class="${noGst ? 'hidden' : 'block'} transition-all duration-300 ease-in-out">
                         <!-- GST Input -->
                         <div class="legacy-mb-6">
-                        <label class="legacy-block label-base legacy-mb-2">GST Number</label>
-                        <input type="text" id="gst-number" class="input legacy-w-full" placeholder="Enter GST Number" value="${data.gstNumber || ''}">
+                        ${renderInput({
+                            id: 'gst-number',
+                            name: 'gstNumber',
+                            label: 'GST Number',
+                            placeholder: 'Enter GST Number',
+                            value: data.gstNumber || '',
+                        })}
                         </div>
                         
                         <!-- File Upload -->
@@ -46,9 +52,16 @@ export function renderStep7(data) {
                         <div class="legacy-flex legacy-items-center legacy-gap-3 p-3 legacy-bg-white legacy-border border-gray-200 legacy-rounded-lg">
                             <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             <span class="text-sm font-medium text-gray-700 truncate flex-1" id="file-name-display">${data.gstFileName || ''}</span>
-                            <button type="button" id="remove-file" class="text-gray-400 hover:text-red-500 transition-colors p-1 legacy-rounded hover:bg-red-50" title="Remove file">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                            </button>
+                            ${renderButton({
+                              id: 'remove-file',
+                              label: 'Remove',
+                              color: 'ghost',
+                              size: 'sm',
+                              iconOnly: true,
+                              leftIconSvg: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`,
+                              extraClass: 'text-gray-400 hover:text-red-500 transition-colors p-1 legacy-rounded hover:bg-red-50',
+                              attributes: 'title="Remove file"'
+                            })}
                         </div>
                         </div>
                 </div>

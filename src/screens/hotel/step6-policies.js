@@ -1,3 +1,9 @@
+import { renderBadge } from '../../components/flowbite/Badge.js';
+import { renderButton } from '../../components/flowbite/Button.js';
+import { renderInput } from '../../components/flowbite/Input.js';
+import { renderDropdownSheet, setupDropdownSheet, renderDropdown } from '../../components/flowbite/Dropdown.js';
+import { renderInputStepper, setupInputStepper } from '../../components/InputStepper.js';
+
 /**
  * Hotel Onboarding - Step 6: Policies
  * Matches Figma Node 62:8040
@@ -31,23 +37,21 @@ export function renderStep6(data = {}) {
             <p class="text-sm text-body legacy-mb-6">Specify the check-in & check-out time at your property</p>
             
             <div class="legacy-grid legacy-grid-cols-2 legacy-gap-6">
-                <div>
-                    <label for="check-in-time" class="form-label">Check-in Time</label>
-                    <div class="select-wrapper legacy-relative">
-                        <select id="check-in-time" class="form-select">
-                            <option value="" disabled ${!checkInTime ? 'selected' : ''}>Select</option>
-                            ${TIME_OPTIONS.map(time => `<option value="${time}" ${checkInTime === time ? 'selected' : ''}>${time}</option>`).join('')}
-                        </select>
-                    </div>
+                <div class="form-group">
+                    ${renderDropdown({
+                        id: 'check-in-time',
+                        label: 'Check-in Time',
+                        value: checkInTime || 'Select',
+                        options: TIME_OPTIONS
+                    })}
                 </div>
-                <div>
-                    <label for="check-out-time" class="form-label">Check-out Time</label>
-                    <div class="select-wrapper legacy-relative">
-                        <select id="check-out-time" class="form-select">
-                            <option value="" disabled ${!checkOutTime ? 'selected' : ''}>Select</option>
-                            ${TIME_OPTIONS.map(time => `<option value="${time}" ${checkOutTime === time ? 'selected' : ''}>${time}</option>`).join('')}
-                        </select>
-                    </div>
+                <div class="form-group">
+                    ${renderDropdown({
+                        id: 'check-out-time',
+                        label: 'Check-out Time',
+                        value: checkOutTime || 'Select',
+                        options: TIME_OPTIONS
+                    })}
                 </div>
             </div>
         </div>
@@ -62,10 +66,13 @@ export function renderStep6(data = {}) {
                     ${paymentPolicies.map((policy, index) => renderPaymentPolicyItem(policy, index)).join('<hr class="border-gray-200" style="margin: 16px 0;" />')}
                 </div>
                 
-                 <button id="add-payment-policy" type="button" class="btn bg-gray-900 text-white hover:bg-gray-800 px-6 py-3 legacy-rounded-lg legacy-flex legacy-items-center legacy-gap-2 transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    Add Stage
-                </button>
+                ${renderButton({
+                    id: 'add-payment-policy',
+                    label: 'Add Stage',
+                    color: 'dark',
+                    size: 'sm',
+                    leftIconSvg: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>`
+                })}
             </div>
         </div>
 
@@ -79,10 +86,13 @@ export function renderStep6(data = {}) {
                     ${cancellationPolicies.map((policy, index) => renderCancellationPolicyItem(policy, index)).join('<hr class="border-gray-200" style="margin: 16px 0;" />')}
                 </div>
 
-                <button id="add-cancellation-policy" type="button" class="btn bg-gray-900 text-white hover:bg-gray-800 px-6 py-3 legacy-rounded-lg legacy-flex legacy-items-center legacy-gap-2 transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    Add Policy
-                </button>
+                ${renderButton({
+                    id: 'add-cancellation-policy',
+                    label: 'Add Policy',
+                    color: 'dark',
+                    size: 'sm',
+                    leftIconSvg: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>`
+                })}
             </div>
         </div>
     </div>
@@ -94,33 +104,53 @@ function renderPaymentPolicyItem(policy, index) {
     <div class="payment-policy-item" data-id="${policy.id}">
         <div class="legacy-flex legacy-justify-between legacy-items-center legacy-mb-4">
             <h4 class="text-sm font-semibold text-heading">Payment Policy ${index + 1}</h4>
-            <span class="policy-badge bg-cyan-50 text-xs font-medium p-1 legacy-rounded legacy-border border-cyan-100" style="color: var(--text-fg-brand-strong);" data-id="${policy.id}">
-                Policy ${index + 1} | ${policy.amount} ${policy.timing}
-            </span>
+            ${renderBadge({
+                label: `Policy ${index + 1} | ${policy.amount} ${policy.timing}`,
+                theme: 'brand',
+                size: 'sm',
+                extraClass: 'policy-badge',
+                attributes: `data-id="${policy.id}"`
+            })}
         </div>
         <div class="legacy-flex flex-row legacy-gap-4 items-end">
-            <div class="w-[45%]">
-                <label class="form-label text-xs">When should this be collected</label>
-                <div class="select-wrapper legacy-relative">
-                    <select class="policy-timing form-select" data-id="${policy.id}" data-field="timing">
-                        <option value="Before check-in" ${policy.timing === 'Before check-in' ? 'selected' : ''}>Before check-in</option>
-                        <option value="After check-in" ${policy.timing === 'After check-in' ? 'selected' : ''}>After check-in</option>
-                        <option value="On booking" ${policy.timing === 'On booking' ? 'selected' : ''}>On booking</option>
-                    </select>
-                </div>
+            <div class="w-[33%]">
+                ${renderDropdown({
+                    id: `payment-timing-${policy.id}`,
+                    label: 'When should this be collected',
+                    value: policy.timing || 'Select',
+                    options: ['Before check-in', 'After check-in', 'On booking'],
+                    attributes: `data-id="${policy.id}" data-field="timing"`
+                })}
             </div>
             <div class="w-[22%]">
                 <label class="form-label text-xs">Days</label>
-                <input type="number" value="${policy.days}" class="policy-days form-input" placeholder="1" data-id="${policy.id}" data-field="days">
+                ${renderInputStepper({
+                    id: `stepper-payment-${policy.id}`,
+                    value: parseInt(policy.days) || 0,
+                    min: 0,
+                    max: 365
+                })}
             </div>
-            <div class="w-[22%]">
-                <label class="form-label text-xs">Show much should be collected</label>
-                <input type="text" value="${policy.amount}" class="policy-amount form-input" placeholder="50%" data-id="${policy.id}" data-field="amount">
+            <div class="w-[34%]">
+                ${renderInput({
+                    label: 'Show much should be collected',
+                    value: policy.amount,
+                    placeholder: '50%',
+                    size: 'sm',
+                    className: 'policy-amount',
+                    attributes: `data-id="${policy.id}" data-field="amount"`
+                })}
             </div>
              <div class="w-[6%] legacy-flex justify-end pb-2">
-                <button type="button" class="remove-payment-policy text-gray-400 hover:text-red-600 transition-colors p-2 legacy-rounded-full hover:bg-gray-100" data-id="${policy.id}" title="Remove policy">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                </button>
+                ${renderButton({
+                    label: 'Remove',
+                    color: 'secondary',
+                    size: 'sm',
+                    iconOnly: true,
+                    leftIconSvg: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>`,
+                    extraClass: 'remove-payment-policy',
+                    attributes: `data-id="${policy.id}" title="Remove policy"`
+                })}
             </div>
         </div>
     </div>
@@ -132,32 +162,53 @@ function renderCancellationPolicyItem(policy, index) {
     <div class="cancellation-policy-item" data-id="${policy.id}">
         <div class="legacy-flex legacy-justify-between legacy-items-center legacy-mb-4">
              <h4 class="text-sm font-semibold text-heading">Cancellation Policy ${index + 1}</h4>
-             <span class="policy-badge bg-cyan-50 text-xs font-medium p-1 legacy-rounded legacy-border border-cyan-100" style="color: var(--text-fg-brand-strong);" data-id="${policy.id}">
-                Policy ${index + 1} | ${policy.amount} ${policy.timing}
-            </span>
+             ${renderBadge({
+                label: `Policy ${index + 1} | ${policy.amount} ${policy.timing}`,
+                theme: 'brand',
+                size: 'sm',
+                extraClass: 'policy-badge',
+                attributes: `data-id="${policy.id}"`
+            })}
         </div>
          <div class="legacy-flex flex-row legacy-gap-4 items-end">
-            <div class="w-[45%]">
-                <label class="form-label text-xs">When can guest cancel it</label>
-                 <div class="select-wrapper legacy-relative">
-                     <select class="cancellation-timing form-select" data-id="${policy.id}" data-field="timing">
-                        <option value="Before Check in" ${policy.timing === 'Before Check in' ? 'selected' : ''}>Before Check in</option>
-                         <option value="After Booking" ${policy.timing === 'After Booking' ? 'selected' : ''}>After Booking</option>
-                    </select>
-                </div>
+            <div class="w-[33%]">
+                 ${renderDropdown({
+                    id: `cancellation-timing-${policy.id}`,
+                    label: 'When can guest cancel it',
+                    value: policy.timing || 'Select',
+                    options: ['Before Check in', 'After Booking'],
+                    attributes: `data-id="${policy.id}" data-field="timing"`
+                 })}
             </div>
             <div class="w-[22%]">
                 <label class="form-label text-xs">Days</label>
-                <input type="number" value="${policy.days}" class="cancellation-days form-input" placeholder="1" data-id="${policy.id}" data-field="days">
+                ${renderInputStepper({
+                    id: `stepper-cancellation-${policy.id}`,
+                    value: parseInt(policy.days) || 0,
+                    min: 0,
+                    max: 365
+                })}
             </div>
-            <div class="w-[22%]">
-                <label class="form-label text-xs">How much should be charged</label>
-                <input type="text" value="${policy.amount}" class="cancellation-amount form-input" placeholder="10%" data-id="${policy.id}" data-field="amount">
+            <div class="w-[34%]">
+                ${renderInput({
+                    label: 'How much should be charged',
+                    value: policy.amount,
+                    placeholder: '10%',
+                    size: 'sm',
+                    className: 'cancellation-amount',
+                    attributes: `data-id="${policy.id}" data-field="amount"`
+                })}
             </div>
              <div class="w-[6%] legacy-flex justify-end pb-2">
-                <button type="button" class="remove-cancellation-policy text-gray-400 hover:text-red-600 transition-colors p-2 legacy-rounded-full hover:bg-gray-100" data-id="${policy.id}" title="Remove policy">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                </button>
+                ${renderButton({
+                    label: 'Remove',
+                    color: 'secondary',
+                    size: 'sm',
+                    iconOnly: true,
+                    leftIconSvg: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>`,
+                    extraClass: 'remove-cancellation-policy',
+                    attributes: `data-id="${policy.id}" title="Remove policy"`
+                })}
             </div>
         </div>
     </div>
@@ -196,27 +247,114 @@ export function setupStep6Handlers(router) {
         const policy = policyArray.find(p => p.id === policyId);
         
         if (badge && policy) {
-            badge.textContent = `Policy ${index + 1} | ${policy.amount} ${policy.timing}`;
+            const labelEl = badge.querySelector('.fb-badge-label');
+            if (labelEl) {
+                labelEl.textContent = `Policy ${index + 1} | ${policy.amount} ${policy.timing}`;
+            }
         }
     };
 
-    // Check-in/out handlers
-    const checkInSelect = document.getElementById('check-in-time');
-    const checkOutSelect = document.getElementById('check-out-time');
+    // --- Global Dropdown Handling (Delegated) ---
+    
+    const handleGlobalClick = (e) => {
+        // Toggle Dropdown
+        const trigger = e.target.closest('.dropdown-trigger');
+        if (trigger) {
+            const input = trigger.querySelector('.fb-input');
+            // Dropdown is a sibling of the input group (trigger) in our current structure
+            const dropdown = trigger.parentElement.querySelector('.dropdown-container');
+            
+            if (input && dropdown) {
+                const isHidden = dropdown.classList.contains('legacy-hidden');
+                
+                // Close all other dropdowns
+                document.querySelectorAll('.dropdown-container').forEach(d => d.classList.add('legacy-hidden'));
+                document.querySelectorAll('.fb-input-group').forEach(g => g.classList.remove('fb-input-focused'));
+                
+                if (isHidden) {
+                    dropdown.classList.remove('legacy-hidden');
+                    trigger.classList.add('fb-input-focused');
+                }
+            }
+            return;
+        }
 
-    if (checkInSelect) {
-        checkInSelect.addEventListener('change', (e) => {
-            step6Data.checkInTime = e.target.value;
-            saveState();
-        });
-    }
+        // Handle Selection
+        const item = e.target.closest('.dropdown-item');
+        if (item) {
+            const dropdown = item.closest('.dropdown-container');
+            // Group is a sibling of the dropdown in our current structure
+            const group = dropdown.parentElement.querySelector('.fb-input-group');
+            const input = group.querySelector('.fb-input');
+            const value = item.dataset.value;
+            const label = item.textContent.trim();
+            
+            if (input) {
+                input.value = label;
+                dropdown.classList.add('legacy-hidden');
+                group.classList.remove('fb-input-focused');
 
-    if (checkOutSelect) {
-        checkOutSelect.addEventListener('change', (e) => {
-            step6Data.checkOutTime = e.target.value;
-            saveState();
-        });
+                // Dispatch to specific handlers based on ID
+                if (input.id === 'check-in-time') {
+                    step6Data.checkInTime = value;
+                    saveState();
+                } else if (input.id === 'check-out-time') {
+                    step6Data.checkOutTime = value;
+                    saveState();
+                } else if (input.id.startsWith('payment-timing-')) {
+                    const id = parseInt(input.dataset.id);
+                    const index = step6Data.paymentPolicies.findIndex(p => p.id === id);
+                    if (index !== -1) {
+                        step6Data.paymentPolicies[index].timing = value;
+                        saveState();
+                        updatePolicyBadge('payment-policy-list', id, step6Data.paymentPolicies, index);
+                    }
+                } else if (input.id.startsWith('cancellation-timing-')) {
+                    const id = parseInt(input.dataset.id);
+                    const index = step6Data.cancellationPolicies.findIndex(p => p.id === id);
+                    if (index !== -1) {
+                        step6Data.cancellationPolicies[index].timing = value;
+                        saveState();
+                        updatePolicyBadge('cancellation-policy-list', id, step6Data.cancellationPolicies, index);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Close on outside click
+        if (!e.target.closest('.fb-input-group') && !e.target.closest('.dropdown-container')) {
+            document.querySelectorAll('.dropdown-container').forEach(d => d.classList.add('legacy-hidden'));
+            document.querySelectorAll('.fb-input-group').forEach(g => g.classList.remove('fb-input-focused'));
+        }
+    };
+
+    // Remove previous listener to avoid duplicates during re-render
+    if (window._step6GlobalClickHandler) {
+        document.removeEventListener('click', window._step6GlobalClickHandler);
     }
+    window._step6GlobalClickHandler = handleGlobalClick;
+    document.addEventListener('click', handleGlobalClick);
+
+    // --- Stepper Initializations ---
+    
+    // Payment Policies Steppers
+    step6Data.paymentPolicies.forEach((policy, index) => {
+        setupInputStepper(`stepper-payment-${policy.id}`, (newValue) => {
+            policy.days = newValue.toString();
+            saveState();
+            updatePolicyBadge('payment-policy-list', policy.id, step6Data.paymentPolicies, index);
+        });
+    });
+
+    // Cancellation Policies Steppers
+    step6Data.cancellationPolicies.forEach((policy, index) => {
+        setupInputStepper(`stepper-cancellation-${policy.id}`, (newValue) => {
+            policy.days = newValue.toString();
+            saveState();
+            updatePolicyBadge('cancellation-policy-list', policy.id, step6Data.cancellationPolicies, index);
+        });
+    });
 
     // --- Payment Policy Handlers ---
     
@@ -249,9 +387,9 @@ export function setupStep6Handlers(router) {
     const paymentContainer = document.getElementById('payment-policy-list');
     if (paymentContainer) {
         paymentContainer.addEventListener('input', (e) => {
-            if (e.target.matches('input') || e.target.matches('select')) {
-                const id = parseInt(e.target.dataset.id);
-                const field = e.target.dataset.field;
+            if (e.target.matches('.fb-input')) {
+                const id = parseInt(e.target.closest('[data-id]').dataset.id || e.target.dataset.id);
+                const field = e.target.closest('[data-field]').dataset.field || e.target.dataset.field;
                 const value = e.target.value;
                 
                 const index = step6Data.paymentPolicies.findIndex(p => p.id === id);
@@ -295,9 +433,9 @@ export function setupStep6Handlers(router) {
     const cancellationContainer = document.getElementById('cancellation-policy-list');
     if (cancellationContainer) {
         cancellationContainer.addEventListener('input', (e) => {
-            if (e.target.matches('input') || e.target.matches('select')) {
-                const id = parseInt(e.target.dataset.id);
-                const field = e.target.dataset.field;
+            if (e.target.matches('.fb-input')) {
+                const id = parseInt(e.target.closest('[data-id]').dataset.id || e.target.dataset.id);
+                const field = e.target.closest('[data-field]').dataset.field || e.target.dataset.field;
                 const value = e.target.value;
                 
                 const index = step6Data.cancellationPolicies.findIndex(p => p.id === id);

@@ -10,6 +10,7 @@ import { authService } from './auth.js'
 import { renderLoginScreen, setupLoginHandlers } from './screens/login.js'
 import { renderHotelWelcome, setupHotelWelcomeHandlers } from './screens/hotel/welcome.js'
 import { renderOperatorWelcome, setupOperatorWelcomeHandlers } from './screens/operator/welcome.js'
+import { renderHotelDashboard, setupHotelDashboardHandlers } from './screens/hotel/dashboard.js'
 
 // Import components and constants
 import { renderHeader } from './components/Header.js'
@@ -50,6 +51,17 @@ router.register('/onboarding/hotel/welcome', () => {
 })
 
 // Register complete route BEFORE the dynamic :step route
+router.register('/hotel/dashboard', () => {
+    const user = router.getUser()
+    if (!user) {
+      router.navigate('/login')
+      return
+    }
+    document.documentElement.setAttribute('data-theme', 'enterprise')
+    app.innerHTML = renderHotelDashboard(user)
+    setupHotelDashboardHandlers(router)
+})
+
 router.register('/onboarding/hotel/complete', () => {
   const user = router.getUser()
   if (!user) {

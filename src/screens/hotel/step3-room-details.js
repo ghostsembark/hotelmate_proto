@@ -1,5 +1,7 @@
 import { renderInputStepper, setupInputStepper } from '../../components/InputStepper.js';
 import { renderSideSheet, setupSideSheet } from '../../components/SideSheet.js';
+import { renderInput } from '../../components/flowbite/Input.js';
+import { renderButton } from '../../components/flowbite/Button.js';
 
 let currentRoomId = null;
 let sideSheetControl = null;
@@ -49,10 +51,14 @@ export function renderStep3(data) {
       ${roomsHtml}
     </div>
 
-    <button id="add-room-btn" class="legacy-w-full legacy-py-4 legacy-border border-dashed legacy-rounded-lg text-body-subtle font-medium legacy-transition legacy-flex legacy-items-center legacy-justify-center legacy-gap-2" style="border-color: var(--border-default); background: transparent; cursor: pointer;">
-      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-      Add Another Room Type
-    </button>
+    ${renderButton({
+      id: 'add-room-btn',
+      label: 'Add Another Room Type',
+      color: 'dashed',
+      size: 'xl',
+      leftIconSvg: `<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>`,
+      extraClass: 'legacy-w-full'
+    })}
 
     <!-- Side Sheet Component -->
     ${renderSideSheet({
@@ -72,15 +78,27 @@ function renderRoomCard(room, index) {
     <div class="room-card" data-id="${room.id}">
       <div class="legacy-flex legacy-justify-between items-start legacy-mb-4">
         <h3 class="heading-lg">Room Type ${index + 1}</h3>
-        ${index > 0 ? `<button class="delete-room-btn" data-id="${room.id}" style="color: var(--text-fg-danger); background: none; border: none; cursor: pointer; padding: 4px;">
-          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-        </button>` : ''}
+        ${index > 0 ? renderButton({
+          id: `delete-room-btn-${room.id}`,
+          label: 'Delete',
+          color: 'destructive',
+          size: 'sm',
+          iconOnly: true,
+          leftIconSvg: `<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>`,
+          extraClass: 'delete-room-btn',
+          attributes: `data-id="${room.id}"`
+        }) : ''}
       </div>
 
       <div class="legacy-mb-4">
-        <label class="form-label">Room Name</label>
-        <input type="text" class="input room-name-input" 
-          placeholder="e.g. Deluxe King" value="${room.name}" data-id="${room.id}">
+        ${renderInput({
+          id: `room-name-${room.id}`,
+          name: 'roomName',
+          label: 'Room Name',
+          placeholder: 'e.g. Deluxe King',
+          value: room.name,
+          className: 'room-name-input',
+        })}
       </div>
 
       <div class="legacy-grid legacy-grid-cols-2 legacy-gap-4 legacy-mb-6 pb-6" style="border-bottom: 1px solid var(--border-default);">
@@ -133,12 +151,14 @@ function renderRoomCard(room, index) {
       </div>
 
       <div class="card-footer" style="padding-top: var(--spacing-6, 24px); border-top: 1px solid var(--border-default);">
-        ${room.isFilled ? renderRoomDetailsSummary(room) : `
-          <button class="btn-details edit-details-btn" data-id="${room.id}">
-            Add Additional Details
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-        `}
+        ${room.isFilled ? renderRoomDetailsSummary(room) : renderButton({
+          label: 'Add Additional Details',
+          color: 'secondary',
+          size: 'base',
+          rightIconSvg: true,
+          extraClass: 'edit-details-btn',
+          attributes: `data-id="${room.id}"`
+        })}
       </div>
     </div>
   `;
@@ -160,12 +180,14 @@ function renderRoomDetailsSummary(room) {
     <div class="room-details-summary">
       <div class="legacy-flex legacy-justify-between legacy-items-center legacy-mb-4">
         <span class="text-sm font-semibold text-gray-900">Additional Details</span>
-        <button class="edit-details-btn legacy-flex legacy-items-center gap-1 text-sm font-medium text-brand" data-id="${room.id}">
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-          </svg>
-          Edit Details
-        </button>
+        ${renderButton({
+          label: 'Edit Details',
+          color: 'ghost',
+          size: 'sm',
+          leftIconSvg: `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>`,
+          extraClass: 'edit-details-btn',
+          attributes: `data-id="${room.id}"`
+        })}
       </div>
       <div class="legacy-grid legacy-grid-cols-2 lg:grid-cols-5 legacy-gap-4 legacy-bg-white legacy-p-4 legacy-rounded-lg legacy-border border-gray-100">
         <div class="detail-item">

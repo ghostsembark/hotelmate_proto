@@ -1,4 +1,5 @@
 import { PROPERTY_TYPES, STAR_RATINGS } from '../../mockData.js'
+import { renderInput } from '../../components/flowbite/Input.js'
 
 /**
  * Hotel Onboarding - Step 1: Basic Info
@@ -15,16 +16,14 @@ export function renderStep1(formData = {}) {
       <form id="step1Form" class="step-form" data-node-id="239:42691">
         <!-- Property Name -->
         <div class="form-group" data-node-id="239:42692">
-          <label for="propertyName" class="form-label">Property Name</label>
-          <input 
-            type="text" 
-            id="propertyName" 
-            name="propertyName" 
-            class="form-input" 
-            placeholder="Enter your hotel name"
-            value="${formData.propertyName || ''}"
-            required
-          >
+          ${renderInput({
+            id: 'propertyName',
+            name: 'propertyName',
+            label: 'Property Name',
+            placeholder: 'Enter your hotel name',
+            value: formData.propertyName || '',
+            required: true,
+          })}
         </div>
 
         <!-- Property Type -->

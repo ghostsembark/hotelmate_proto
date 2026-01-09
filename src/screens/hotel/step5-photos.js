@@ -1,7 +1,4 @@
-/**
- * Hotel Onboarding - Step 5: Photos
- * Matches Figma Node 29:2018 (Initial) and 29:2183 (Uploaded)
- */
+import { renderButton } from '../../components/flowbite/Button.js';
 
 const PROPERTY_TAGS = ['Facade', 'Playground', 'Swimming Pool', 'Restaurant', 'Lobby', 'Lounge', 'Bar'];
 const ROOM_TAGS = ['Bathroom', 'Bed', 'Balcony'];
@@ -29,28 +26,28 @@ export function renderStep5(data = {}, rooms = []) {
             <p class="text-sm font-normal text-body">Showcase your property with high-quality photos to attract bookings</p>
           </div>
           
-          ${propertyPhotos.length === 0 ? `
-            <button id="upload-property-photo" class="btn btn-secondary w-fit legacy-flex legacy-items-center gap-1.5">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-              </svg>
-              Upload Photos
-            </button>
-          ` : ''}
+          ${propertyPhotos.length === 0 ? renderButton({
+            id: 'upload-property-photo',
+            label: 'Upload Photos',
+            color: 'secondary',
+            size: 'base',
+            leftIconSvg: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>`,
+            extraClass: 'w-fit'
+          }) : ''}
         </div>
         
         <div id="property-photo-grid" class="legacy-grid grid-cols-4 legacy-gap-6 legacy-mb-6">
           ${propertyPhotos.map((photo, idx) => renderPhotoCard(photo, idx, 'property', PROPERTY_TAGS)).join('')}
         </div>
         
-        ${propertyPhotos.length > 0 ? `
-          <button id="upload-property-photo" class="btn btn-secondary w-fit legacy-flex legacy-items-center gap-1.5">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-            </svg>
-            Upload Photos
-          </button>
-        ` : ''}
+        ${propertyPhotos.length > 0 ? renderButton({
+          id: 'upload-property-photo',
+          label: 'Upload Photos',
+          color: 'secondary',
+          size: 'base',
+          leftIconSvg: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>`,
+          extraClass: 'w-fit'
+        }) : ''}
       </div>
 
       <!-- Room Photos Section -->
@@ -67,25 +64,27 @@ export function renderStep5(data = {}, rooms = []) {
               <div class="room-photo-subsection legacy-flex legacy-flex-col legacy-gap-6" data-room-id="${room.id}">
                 <h4 class="text-base font-semibold text-heading">Room Type ${room.id || room.name || room.type}</h4>
                 
-                ${photos.length === 0 ? `
-                  <button class="btn btn-secondary w-fit upload-room-photo legacy-flex legacy-items-center gap-1.5" data-room-id="${room.id}">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                    </svg>
-                    Upload Photos
-                  </button>
-                ` : ''}
+                ${photos.length === 0 ? renderButton({
+                  label: 'Upload Photos',
+                  color: 'secondary',
+                  size: 'base',
+                  leftIconSvg: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>`,
+                  extraClass: 'w-fit upload-room-photo',
+                  attributes: `data-room-id="${room.id}"`
+                }) : ''}
                 
                 ${photos.length > 0 ? `
                   <div class="legacy-grid grid-cols-4 legacy-gap-6 legacy-mb-6" id="grid-${room.id}">
                     ${photos.map((photo, idx) => renderPhotoCard(photo, idx, room.id, ROOM_TAGS)).join('')}
                   </div>
-                  <button class="btn btn-secondary w-fit upload-room-photo legacy-flex legacy-items-center gap-1.5" data-room-id="${room.id}">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                    </svg>
-                    Upload Photos
-                  </button>
+                  ${renderButton({
+                    label: 'Upload Photos',
+                    color: 'secondary',
+                    size: 'base',
+                    leftIconSvg: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>`,
+                    extraClass: 'w-fit upload-room-photo',
+                    attributes: `data-room-id="${room.id}"`
+                  })}
                 ` : ''}
               </div>
             `;
@@ -111,10 +110,15 @@ function renderPhotoCard(photo, index, type, tags) {
     <div class="photo-card legacy-relative group legacy-bg-white legacy-rounded-lg legacy-overflow-hidden legacy-border border-gray-200 legacy-shadow-sm transition-all hover:shadow-md">
        <div class="aspect-video legacy-relative legacy-overflow-hidden bg-gray-100">
          <img src="${photo.url}" class="legacy-w-full legacy-h-full object-cover" alt="Uploaded photo">
-         <button class="remove-photo legacy-absolute top-2 right-2 w-6 h-6 legacy-bg-white legacy-rounded-full legacy-flex legacy-items-center legacy-justify-center text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity legacy-shadow-sm hover:bg-gray-50" 
-                 data-type="${type}" data-index="${index}">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-         </button>
+         ${renderButton({
+           label: 'Remove',
+           color: 'ghost',
+           size: 'xs',
+           iconOnly: true,
+           leftIconSvg: `<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>`,
+           extraClass: 'remove-photo legacy-absolute top-2 right-2 w-6 h-6 legacy-bg-white legacy-rounded-full legacy-flex legacy-items-center legacy-justify-center text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity legacy-shadow-sm hover:bg-gray-50',
+           attributes: `data-type="${type}" data-index="${index}"`
+         })}
        </div>
        <div class="p-3">
          <div class="legacy-relative">

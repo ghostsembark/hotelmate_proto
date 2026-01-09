@@ -1,4 +1,5 @@
 import { MOCK_LOCATIONS } from '../../mockData.js'
+import { renderInput } from '../../components/flowbite/Input.js'
 
 /**
  * Hotel Onboarding - Step 2: Location
@@ -15,56 +16,43 @@ export function renderStep2(formData = {}) {
       <form id="step2Form" class="step-form">
         <!-- Contact Details -->
         <div class="form-group" data-node-id="239:46246">
-          <label for="phoneNumber" class="form-label">Phone number</label>
-          <div class="phone-input-group">
-            <input 
-              type="tel" 
-              id="phoneNumber" 
-              name="phoneNumber" 
-              class="form-input" 
-              placeholder="123-456-7890"
-              value="${formData.phoneNumber || ''}"
-              required
-            >
-          </div>
+          ${renderInput({
+            id: 'phoneNumber',
+            name: 'phoneNumber',
+            label: 'Phone number',
+            type: 'tel',
+            placeholder: '123-456-7890',
+            value: formData.phoneNumber || '',
+            required: true,
+          })}
         </div>
 
         <div class="form-group">
-          <label for="email" class="form-label">Email Address</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            class="form-input" 
-            placeholder="hotel@example.com"
-            value="${formData.email || ''}"
-            required
-          >
+          ${renderInput({
+            id: 'email',
+            name: 'email',
+            label: 'Email Address',
+            type: 'email',
+            placeholder: 'hotel@example.com',
+            value: formData.email || '',
+            required: true,
+          })}
         </div>
 
         <!-- Address Search -->
-        <div class="form-group legacy-mt-8
+        <div class="form-group legacy-mt-8">
           <!-- Divider -->
         
 
           <p class="section-label">Property Address</p>
           
           <div class="legacy-relative">
-            <label for="addressSearch" class="form-label">Search</label>
-            <div class="legacy-relative">
-              <input 
-                type="text" 
-                id="addressSearch" 
-                class="form-input pr-10" 
-                placeholder="Search for your property Location"
-                autocomplete="off"
-              >
-              <div class="legacy-absolute inset-y-0 legacy-right-0 legacy-flex legacy-items-center pr-3 pointer-events-none">
-                <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                </svg>
-              </div>
-            </div>
+            ${renderInput({
+              id: 'addressSearch',
+              label: 'Search',
+              placeholder: 'Search for your property Location',
+              leftIcon: 'search',
+            })}
             
             <!-- Flowbite Dropdown Sheet -->
             <div id="addressDropdown" class="legacy-hidden dropdown-container">
@@ -86,42 +74,36 @@ export function renderStep2(formData = {}) {
           <p class="section-label">Fill full address so that traveller can reach out to you</p>
           
           <div class="form-group">
-            <label for="buildingNumber" class="form-label">Building Number, Plot Number</label>
-            <input 
-              type="text" 
-              id="buildingNumber" 
-              name="buildingNumber" 
-              class="form-input" 
-              placeholder="e.g. 123, Block A"
-              value="${formData.buildingNumber || ''}"
-              required
-            >
+            ${renderInput({
+              id: 'buildingNumber',
+              name: 'buildingNumber',
+              label: 'Building Number, Plot Number',
+              placeholder: 'e.g. 123, Block A',
+              value: formData.buildingNumber || '',
+              required: true,
+            })}
           </div>
 
           <div class="form-group">
-            <label for="street" class="form-label">Street, Colony, Area</label>
-            <input 
-              type="text" 
-              id="street" 
-              name="street" 
-              class="form-input" 
-              placeholder="e.g. Main Street, Downtown"
-              value="${formData.street || ''}"
-              required
-            >
+            ${renderInput({
+              id: 'street',
+              name: 'street',
+              label: 'Street, Colony, Area',
+              placeholder: 'e.g. Main Street, Downtown',
+              value: formData.street || '',
+              required: true,
+            })}
           </div>
 
           <div class="form-group">
-            <label for="cityArea" class="form-label">City, State</label>
-            <input 
-              type="text" 
-              id="cityArea" 
-              name="cityArea" 
-              class="form-input" 
-              placeholder="e.g. New York, NY"
-              value="${formData.cityArea || ''}"
-              required
-            >
+            ${renderInput({
+              id: 'cityArea',
+              name: 'cityArea',
+              label: 'City, State',
+              placeholder: 'e.g. New York, NY',
+              value: formData.cityArea || '',
+              required: true,
+            })}
           </div>
         </div>
       </form>
@@ -138,8 +120,8 @@ export function setupStep2Handlers(router) {
     const detailedFields = document.getElementById('detailedAddressFields');
     const addressOptions = document.querySelectorAll('.address-option');
 
-    // Input persistence
-    const inputs = form.querySelectorAll('input');
+    // Input persistence - now using fb-input class
+    const inputs = form.querySelectorAll('.fb-input, input');
     inputs.forEach(input => {
         input.addEventListener('change', (e) => {
             const { name, value } = e.target;
@@ -153,17 +135,21 @@ export function setupStep2Handlers(router) {
     });
 
     // Search Interaction
-    addressSearch.addEventListener('input', () => {
-        addressDropdown.classList.remove('hidden');
-    });
+    if (addressSearch) {
+        addressSearch.addEventListener('input', () => {
+            addressDropdown.classList.remove('hidden');
+            addressDropdown.classList.remove('legacy-hidden');
+        });
 
-    addressSearch.addEventListener('focus', () => {
-        addressDropdown.classList.remove('hidden');
-    });
+        addressSearch.addEventListener('focus', () => {
+            addressDropdown.classList.remove('hidden');
+            addressDropdown.classList.remove('legacy-hidden');
+        });
+    }
 
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
-        if (!addressSearch.contains(e.target) && !addressDropdown.contains(e.target)) {
+        if (addressSearch && !addressSearch.contains(e.target) && !addressDropdown.contains(e.target)) {
             addressDropdown.classList.add('hidden');
         }
     });
@@ -172,7 +158,7 @@ export function setupStep2Handlers(router) {
     addressOptions.forEach(option => {
         option.addEventListener('click', (e) => {
             const selectedAddress = e.target.textContent.trim();
-            addressSearch.value = selectedAddress;
+            if (addressSearch) addressSearch.value = selectedAddress;
             addressDropdown.classList.add('hidden');
             detailedFields.classList.remove('hidden');
 
@@ -183,9 +169,13 @@ export function setupStep2Handlers(router) {
                 const street = parts[2].trim();
                 const city = parts[3] ? parts[3].trim() : '';
 
-                document.getElementById('buildingNumber').value = building;
-                document.getElementById('street').value = street;
-                document.getElementById('cityArea').value = city;
+                const buildingInput = document.getElementById('buildingNumber');
+                const streetInput = document.getElementById('street');
+                const cityInput = document.getElementById('cityArea');
+
+                if (buildingInput) buildingInput.value = building;
+                if (streetInput) streetInput.value = street;
+                if (cityInput) cityInput.value = city;
 
                 // Persist auto-filled data
                 router.updateOnboardingData('step2', {

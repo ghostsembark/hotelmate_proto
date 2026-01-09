@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="enterprise">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Total Revenue Card - Component Test</title>
+
+    <!-- Flowbite CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <style>
+      /* Base styles matching enterprise theme */
+      :root {
+        --color-cyan-600: #0694a2;
+        --color-gray-500: #6b7280;
+        --color-gray-200: #e5e7eb;
+        --color-gray-100: #f3f4f6;
+        --color-gray-50: #f9fafb;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        background-color: #f7f9fa;
+        padding: 24px;
+        color: #111827;
+      }
+
+      .test-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .test-header {
+        margin-bottom: 32px;
+      }
+
+      .test-header h1 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 8px;
+      }
+
+      .test-header p {
+        font-size: 14px;
+        color: #6b7280;
+      }
+
+      .test-section {
+        margin-bottom: 48px;
+      }
+
+      .test-section h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .variant-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 24px;
+      }
+
+      .variant-item {
+        background: white;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .variant-label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #9ca3af;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 12px;
+      }
+
+      .props-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+      }
+
+      .props-table th,
+      .props-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .props-table th {
+        background: #f9fafb;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      .props-table td {
+        color: #6b7280;
+      }
+
+      .props-table code {
+        background: #f3f4f6;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 12px;
+        color: #0694a2;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .badge-required {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+
+      .badge-optional {
+        background: #dbeafe;
+        color: #2563eb;
+      }
+
+      /* Component styles */
+      .bg-white {
+        background-color: white;
+      }
+      .rounded {
+        border-radius: 4px;
+      }
+      .p-4 {
+        padding: 16px;
+      }
+      .pt-5 {
+        padding-top: 20px;
+      }
+      .mb-2 {
+        margin-bottom: 8px;
+      }
+      .mb-4 {
+        margin-bottom: 16px;
+      }
+      .h-44 {
+        height: 176px;
+      }
+
+      .flex {
+        display: flex;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .justify-between {
+        justify-content: space-between;
+      }
+      .gap-1\.5 {
+        gap: 6px;
+      }
+
+      .text-base {
+        font-size: 16px;
+      }
+      .text-sm {
+        font-size: 14px;
+      }
+      .text-xl {
+        font-size: 20px;
+      }
+      .font-medium {
+        font-weight: 500;
+      }
+      .font-bold {
+        font-weight: 700;
+      }
+
+      .text-gray-500 {
+        color: #6b7280;
+      }
+      .text-gray-900 {
+        color: #111827;
+      }
+      .text-cyan-600 {
+        color: #0694a2;
+      }
+
+      .border {
+        border-width: 1px;
+        border-style: solid;
+      }
+      .border-gray-200 {
+        border-color: #e5e7eb;
+      }
+      .border-gray-100 {
+        border-color: #f3f4f6;
+      }
+
+      .px-2 {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      .py-1\.5 {
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+      .py-1 {
+        padding-top: 4px;
+        padding-bottom: 4px;
+      }
+
+      .hover\:bg-gray-50:hover {
+        background-color: #f9fafb;
+      }
+      .focus\:ring-2:focus {
+        box-shadow: 0 0 0 2px rgba(6, 148, 162, 0.2);
+      }
+      .focus\:outline-none:focus {
+        outline: none;
+      }
+      .transition-colors {
+        transition: color 0.15s, background-color 0.15s;
+      }
+
+      .relative {
+        position: relative;
+      }
+      .absolute {
+        position: absolute;
+      }
+      .right-0 {
+        right: 0;
+      }
+      .mt-1 {
+        margin-top: 4px;
+      }
+      .z-10 {
+        z-index: 10;
+      }
+      .hidden {
+        display: none;
+      }
+      .w-3 {
+        width: 12px;
+      }
+      .h-3 {
+        height: 12px;
+      }
+      .w-36 {
+        width: 144px;
+      }
+
+      .divide-y > * + * {
+        border-top-width: 1px;
+      }
+      .divide-gray-100 > * + * {
+        border-color: #f3f4f6;
+      }
+      .rounded-lg {
+        border-radius: 8px;
+      }
+      .shadow-lg {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      .block {
+        display: block;
+      }
+      .px-4 {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .py-2 {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+      .text-gray-700 {
+        color: #374151;
+      }
+      .hover\:bg-gray-100:hover {
+        background-color: #f3f4f6;
+      }
+      .bg-gray-50 {
+        background-color: #f9fafb;
+      }
+
+      /* Skeleton animation */
+      .animate-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .bg-gray-200 {
+        background-color: #e5e7eb;
+      }
+      .bg-gray-100 {
+        background-color: #f3f4f6;
+      }
+      .w-32 {
+        width: 128px;
+      }
+      .w-40 {
+        width: 160px;
+      }
+      .w-24 {
+        width: 96px;
+      }
+      .h-6 {
+        height: 24px;
+      }
+      .h-8 {
+        height: 32px;
+      }
+      .h-40 {
+        height: 160px;
+      }
+
+      .text-gray-400 {
+        color: #9ca3af;
+      }
+      .justify-center {
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-container">
+      <!-- Header -->
+      <div class="test-header">
+        <h1>Total Revenue Card Component</h1>
+        <p>
+          Figma Node: 174:4415 | Theme: Enterprise | Built with Flowbite +
+          Chart.js
+        </p>
+      </div>
+
+      <!-- Props Documentation -->
+      <div class="test-section">
+        <h2>📋 Props</h2>
+        <table class="props-table">
+          <thead>
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>title</code></td>
+              <td>string</td>
+              <td><code>"Total Revenue"</code></td>
+              <td>Card title displayed in the header</td>
+            </tr>
+            <tr>
+              <td><code>value</code></td>
+              <td>string</td>
+              <td><code>"INR 2,90,000"</code></td>
+              <td>Main metric value to display</td>
+            </tr>
+            <tr>
+              <td><code>chartData</code></td>
+              <td>array</td>
+              <td><code>[{ label, value }]</code></td>
+              <td>Array of data points for the bar chart</td>
+            </tr>
+            <tr>
+              <td><code>timePeriod</code></td>
+              <td>string</td>
+              <td><code>"This Week"</code></td>
+              <td>Currently selected time period</td>
+            </tr>
+            <tr>
+              <td><code>timePeriodOptions</code></td>
+              <td>array</td>
+              <td><code>["This Week", "This Month", "This Year"]</code></td>
+              <td>Options for the dropdown</td>
+            </tr>
+            <tr>
+              <td><code>variant</code></td>
+              <td>string</td>
+              <td><code>"default"</code></td>
+              <td>
+                Display variant: <code>default</code>, <code>loading</code>,
+                <code>empty</code>
+              </td>
+            </tr>
+            <tr>
+              <td><code>onTimePeriodChange</code></td>
+              <td>function</td>
+              <td><code>null</code></td>
+              <td>Callback when time period changes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Variants -->
+      <div class="test-section">
+        <h2>🎨 Variants</h2>
+        <div class="variant-grid">
+          <!-- Default Variant -->
+          <div class="variant-item">
+            <div class="variant-label">Default</div>
+            <div id="card-default"></div>
+          </div>
+
+          <!-- Loading Variant -->
+          <div class="variant-item">
+            <div class="variant-label">Loading</div>
+            <div id="card-loading"></div>
+          </div>
+
+          <!-- Empty Variant -->
+          <div class="variant-item">
+            <div class="variant-label">Empty</div>
+            <div id="card-empty"></div>
+          </div>
+
+          <!-- Custom Data Variant -->
+          <div class="variant-item">
+            <div class="variant-label">Custom Data (Monthly)</div>
+            <div id="card-custom"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Demo -->
+      <div class="test-section">
+        <h2>🔧 Interactive Demo</h2>
+        <p style="margin-bottom: 16px; color: #6b7280; font-size: 14px">
+          Click on the "This Week" dropdown to see the interactive behavior.
+          Check the console for callback logs.
+        </p>
+        <div style="max-width: 420px">
+          <div id="card-interactive"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      // Import the component (simulated inline for standalone test)
+
+      /**
+       * Renders the Total Revenue Card component
+       */
+      function renderTotalRevenueCard(props = {}) {
+        const {
+          title = "Total Revenue",
+          value = "INR 2,90,000",
+          timePeriod = "This Week",
+          timePeriodOptions = ["This Week", "This Month", "This Year"],
+          variant = "default",
+          id = "total-revenue-card",
+        } = props;
+
+        const chartId = `${id}-chart`;
+        const dropdownId = `${id}-dropdown`;
+        const dropdownMenuId = `${id}-dropdown-menu`;
+
+        // Loading skeleton variant
+        if (variant === "loading") {
+          return `
+                <div id="${id}" class="bg-white rounded p-4 pt-5 animate-pulse">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="h-6 bg-gray-200 rounded w-32"></div>
+                        <div class="h-8 bg-gray-200 rounded w-24"></div>
+                    </div>
+                    <div class="h-8 bg-gray-200 rounded w-40 mb-4"></div>
+                    <div class="h-40 bg-gray-100 rounded"></div>
+                </div>
+                `;
+        }
+
+        // Empty state variant
+        if (variant === "empty") {
+          return `
+                <div id="${id}" class="bg-white rounded p-4 pt-5">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-base font-medium text-gray-500">${title}</span>
+                        <button class="flex items-center gap-1.5 text-sm font-medium text-cyan-600 border border-gray-200 rounded px-2 py-1.5">
+                            ${timePeriod}
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="text-xl font-bold text-gray-900 mb-4">--</div>
+                    <div class="h-40 flex items-center justify-center bg-gray-50 rounded">
+                        <p class="text-gray-400 text-sm">No data available</p>
+                    </div>
+                </div>
+                `;
+        }
+
+        // Generate dropdown options HTML
+        const dropdownOptionsHtml = timePeriodOptions
+          .map(
+            (option) => `
+                <li>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${
+                      option === timePeriod ? "bg-gray-50 font-medium" : ""
+                    }" data-value="${option}">
+                        ${option}
+                    </a>
+                </li>
+            `
+          )
+          .join("");
+
+        return `
+            <div id="${id}" class="bg-white rounded p-4 pt-5" data-component="total-revenue-card">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-base font-medium text-gray-500">${title}</span>
+                    
+                    <div class="relative">
+                        <button 
+                            id="${dropdownId}" 
+                            class="flex items-center gap-1.5 text-sm font-medium text-cyan-600 bg-white border border-gray-200 rounded px-2 py-1.5 hover:bg-gray-50 focus:ring-2 focus:outline-none transition-colors"
+                            type="button"
+                        >
+                            <span class="dropdown-label">${timePeriod}</span>
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        
+                        <div id="${dropdownMenuId}" class="hidden z-10 absolute right-0 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-36 border border-gray-100">
+                            <ul class="py-1 text-sm text-gray-700">
+                                ${dropdownOptionsHtml}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-xl font-bold text-gray-900 mb-4">${value}</div>
+                
+                <div class="h-44 relative">
+                    <canvas id="${chartId}"></canvas>
+                </div>
+            </div>
+            `;
+      }
+
+      /**
+       * Initialize chart and handlers
+       */
+      function setupTotalRevenueCardHandlers(props = {}) {
+        const {
+          id = "total-revenue-card",
+          chartData = [
+            { label: "1 Jan", value: 45000 },
+            { label: "2", value: 48000 },
+            { label: "3", value: 35000 },
+            { label: "4", value: 50000 },
+            { label: "5", value: 28000 },
+            { label: "6", value: 30000 },
+            { label: "7 Jan", value: 32000 },
+          ],
+          onTimePeriodChange = null,
+        } = props;
+
+        const chartId = `${id}-chart`;
+        const dropdownId = `${id}-dropdown`;
+        const dropdownMenuId = `${id}-dropdown-menu`;
+
+        setTimeout(() => {
+          const canvas = document.getElementById(chartId);
+          if (!canvas) return;
+
+          const ctx = canvas.getContext("2d");
+
+          // Create gradient for bars
+          const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+          gradient.addColorStop(0, "#EC4899");
+          gradient.addColorStop(1, "#FDF2F8");
+
+          const bgGradient = ctx.createLinearGradient(0, 0, 0, 200);
+          bgGradient.addColorStop(0, "#FCE7F3");
+          bgGradient.addColorStop(1, "#FDF2F8");
+
+          const labels = chartData.map((d) => d.label);
+          const values = chartData.map((d) => d.value);
+          const maxValue = Math.max(...values);
+          const backgroundValues = values.map(() => maxValue * 1.1);
+
+          new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: "Background",
+                  data: backgroundValues,
+                  backgroundColor: bgGradient,
+                  borderRadius: 4,
+                  borderSkipped: false,
+                  barPercentage: 0.5,
+                  categoryPercentage: 0.8,
+                  order: 2,
+                },
+                {
+                  label: "Revenue",
+                  data: values,
+                  backgroundColor: gradient,
+                  borderRadius: 4,
+                  borderSkipped: false,
+                  barPercentage: 0.5,
+                  categoryPercentage: 0.8,
+                  order: 1,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: "white",
+                  titleColor: "#111827",
+                  bodyColor: "#6B7280",
+                  borderColor: "#E5E7EB",
+                  borderWidth: 1,
+                  padding: 12,
+                  displayColors: false,
+                  callbacks: {
+                    label: (item) =>
+                      item.datasetIndex === 1
+                        ? `INR ${item.raw.toLocaleString("en-IN")}`
+                        : null,
+                  },
+                  filter: (item) => item.datasetIndex === 1,
+                },
+              },
+              scales: {
+                x: {
+                  grid: { display: false },
+                  ticks: {
+                    color: "#8492A6",
+                    font: { size: 11, weight: "600" },
+                  },
+                  border: { display: false },
+                },
+                y: {
+                  position: "left",
+                  grid: { color: "#EDF2F7", drawBorder: false },
+                  ticks: {
+                    color: "#8492A6",
+                    font: { size: 11, weight: "600" },
+                    callback: (value) => value >= 1000 ? `${Math.floor(value / 1000)}k` : Math.floor(value),
+                    stepSize: 10000,
+                  },
+                  border: { display: false },
+                  min: 0,
+                  max: 55000,
+                },
+              },
+            },
+          });
+
+          // Dropdown handlers
+          const dropdownBtn = document.getElementById(dropdownId);
+          const dropdownMenu = document.getElementById(dropdownMenuId);
+
+          if (dropdownBtn && dropdownMenu) {
+            dropdownBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              dropdownMenu.classList.toggle("hidden");
+            });
+
+            document.addEventListener("click", () => {
+              dropdownMenu.classList.add("hidden");
+            });
+
+            dropdownMenu.querySelectorAll("a").forEach((option) => {
+              option.addEventListener("click", (e) => {
+                e.preventDefault();
+                const value = option.dataset.value;
+                dropdownBtn.querySelector(".dropdown-label").textContent =
+                  value;
+                dropdownMenu.classList.add("hidden");
+                if (onTimePeriodChange) onTimePeriodChange(value);
+              });
+            });
+          }
+        }, 100);
+      }
+
+      // Render all variants
+      document.getElementById("card-default").innerHTML =
+        renderTotalRevenueCard({ id: "card-default" });
+      setupTotalRevenueCardHandlers({ id: "card-default" });
+
+      document.getElementById("card-loading").innerHTML =
+        renderTotalRevenueCard({ id: "card-loading", variant: "loading" });
+
+      document.getElementById("card-empty").innerHTML = renderTotalRevenueCard({
+        id: "card-empty",
+        variant: "empty",
+      });
+
+      document.getElementById("card-custom").innerHTML = renderTotalRevenueCard(
+        {
+          id: "card-custom",
+          title: "Monthly Revenue",
+          value: "INR 12,45,000",
+          timePeriod: "This Month",
+        }
+      );
+      setupTotalRevenueCardHandlers({
+        id: "card-custom",
+        chartData: [
+          { label: "Week 1", value: 280000 },
+          { label: "Week 2", value: 320000 },
+          { label: "Week 3", value: 290000 },
+          { label: "Week 4", value: 355000 },
+        ],
+      });
+
+      document.getElementById("card-interactive").innerHTML =
+        renderTotalRevenueCard({ id: "card-interactive" });
+      setupTotalRevenueCardHandlers({
+        id: "card-interactive",
+        onTimePeriodChange: (value) => {
+          console.log(`[TotalRevenueCard] Time period changed to: ${value}`);
+          alert(`Time period changed to: ${value}`);
+        },
+      });
+    </script>
+  </body>
+</html>
