@@ -1,8 +1,12 @@
+---
+trigger: always_on
+---
+
 # Workspace Rules
 
 1.  **Flowbite Usage**:
 
-    - For composing Figma screens, **always** use Flowbite components, styles, and tokens.
+    - For composing Figma screens, **always** use Flowbite and figma components, styles, and tokens.
     - The Figma designs are built using the Flowbite Design System, so implementation must match this strict requirement.
 
 2.  **Theming Strategy**:
